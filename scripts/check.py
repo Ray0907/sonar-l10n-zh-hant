@@ -11,7 +11,8 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-PLACEHOLDER = re.compile(r"\{[^}]*\}|%[sd]")
+PRINTF = re.compile(r"%[sd]")
+ICU_TYPES = ("select", "plural", "selectordinal")
 
 
 def readProps(path_file: Path) -> dict[str, str]:
@@ -42,9 +43,45 @@ def hasTerm(term: str, text: str) -> bool:
 	return re.search(rf"(?<![A-Za-z0-9]){re.escape(term)}(?![A-Za-z0-9])", text) is not None
 
 
+def branchBodies(text: str) -> list[str]:
+	"""Return the {body} of each branch in the tail of an ICU select or plural."""
+	list_body, depth, start = [], 0, 0
+	for pos, char in enumerate(text):
+		if char == "{":
+			if depth == 0:
+				start = pos + 1
+			depth += 1
+		elif char == "}" and depth > 0:
+			depth -= 1
+			if depth == 0:
+				list_body.append(text[start:pos])
+	return list_body
+
+
+def extractArgs(text: str) -> set[str]:
+	"""Argument names of a MessageFormat string. Words inside branch bodies are text."""
+	set_name = set(PRINTF.findall(text))
+	pos = 0
+	while pos < len(text):
+		if text[pos] != "{":
+			pos += 1
+			continue
+		depth, end = 1, pos + 1
+		while end < len(text) and depth:
+			depth += (text[end] == "{") - (text[end] == "}")
+			end += 1
+		list_part = text[pos + 1:end - 1].split(",", 2)
+		set_name.add(list_part[0].strip())
+		if len(list_part) == 3 and list_part[1].strip() in ICU_TYPES:
+			for body in branchBodies(list_part[2]):
+				set_name |= extractArgs(body)
+		pos = end
+	return set_name
+
+
 def checkKey(key: str, text_en: str, text_zh: str, list_protected: list[str]) -> list[str]:
 	list_error = []
-	if sorted(PLACEHOLDER.findall(text_en)) != sorted(PLACEHOLDER.findall(text_zh)):
+	if extractArgs(text_en) != extractArgs(text_zh):
 		list_error.append(f"placeholder mismatch: {key}")
 	for term in list_protected:
 		if hasTerm(term, text_en) and term not in text_zh:

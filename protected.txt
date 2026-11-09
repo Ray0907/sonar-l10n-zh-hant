@@ -35,3 +35,12 @@ ID
 LCOM4
 MQR
 AI
+Bitbucket
+Gitlab
+bitbucket
+github
+gitlab
+http
+https
+sonarqube
+sonarscanner
