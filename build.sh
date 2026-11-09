@@ -25,6 +25,9 @@ Plugin-Name: Traditional Chinese Pack (zh-TW)
 Plugin-Version: $VERSION
 Plugin-Class: org.sonar.plugins.zhtwpack.ZhTwPackPlugin
 Plugin-Description: Traditional Chinese (Taiwan) language pack
+Plugin-Homepage: https://github.com/Ray0907/sonar-l10n-zhtw
+Plugin-License: GNU LGPL 3
+Plugin-Organization: Ray Tien
 Sonar-Version: 9.8.0.203
 EOF
 
