@@ -1,0 +1,53 @@
+policy	en	zh	source	note
+keep	Bug	Bug	draft	台灣工程師慣用英文
+keep	Code Smell	Code Smell	draft	無通用中文
+keep	Security Hotspot	Security Hotspot	draft	專有功能名稱
+keep	Quality Gate	Quality Gate	draft	SonarQube 功能名稱，慣用英文
+keep	Quality Profile	Quality Profile	draft	SonarQube 功能名稱，慣用英文
+keep	Pull Request	Pull Request	draft	慣用英文
+keep	Webhook	Webhook	draft	慣用英文
+keep	SCM	SCM	draft	縮寫
+keep	CI	CI	draft	縮寫
+keep	API	API	zhtw-mcp case_rules	大小寫固定
+keep	SonarQube	SonarQube	draft	產品名稱
+keep	GitHub	GitHub	zhtw-mcp case_rules	大小寫固定
+keep	GitLab	GitLab	draft	產品名稱
+keep	Bitbucket	Bitbucket	draft	產品名稱
+keep	Jenkins	Jenkins	draft	產品名稱
+decide	Token	權杖	zhtw-mcp	zhtw-mcp 建議 權杖；台灣工程師也常直接寫 Token
+decide	Pipeline	管線	zhtw-mcp	zhtw-mcp 建議 管線 或 生產線；也常直接寫 Pipeline
+decide	Plugin	外掛程式	zhtw-mcp	實務上常寫 外掛 或 Plugin
+decide	Repository	儲存庫	zhtw-mcp	實務上也常寫 Repo
+decide	Vulnerability	弱點	draft	弱點 與 漏洞 都常見，zhtw-mcp 無規則
+decide	Branch	分支	draft	也有人直接寫 Branch
+map	file	檔案	zhtw-mcp	例外：documentation 用 文件，需逐筆確認
+map	user	使用者	zhtw-mcp
+map	view	檢視	zhtw-mcp
+map	integrate	整合	zhtw-mcp
+map	click	點選	zhtw-mcp
+map	import	匯入	zhtw-mcp
+map	export	匯出	zhtw-mcp
+map	data	資料	zhtw-mcp
+map	build	建構	zhtw-mcp	zhtw-mcp 規則；CI 情境常寫 建置，需確認
+map	template	範本	zhtw-mcp
+map	disable	停用	zhtw-mcp
+map	customize	自訂	zhtw-mcp
+map	key (cryptographic)	金鑰	zhtw-mcp
+map	extension	擴充	zhtw-mcp
+map	load	載入	zhtw-mcp
+map	connect	連線	zhtw-mcp
+map	select	選取	zhtw-mcp
+map	real-time	即時	zhtw-mcp
+map	dashboard	儀表板	zhtw-mcp
+map	scanner	掃描器	zhtw-mcp
+map	software	軟體	zhtw-mcp
+map	memory	記憶體	zhtw-mcp
+map	thread	執行緒	zhtw-mcp
+map	process	行程	zhtw-mcp
+map	interface	介面	zhtw-mcp
+map	default	預設	zhtw-mcp
+map	code	程式碼	zhtw-mcp
+map	debug	除錯	zhtw-mcp
+map	SQL injection	SQL 隱碼攻擊	zhtw-mcp
+avoid	parameter	引數	zhtw-mcp	zhtw-mcp 把 參數 改成 引數，但 parameter 與 argument 不同，不採用
+avoid	source code	原始程式碼	zhtw-mcp	zhtw-mcp 規則；原始碼 在台灣同樣通用，不強制
