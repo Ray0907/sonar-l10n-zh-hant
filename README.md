@@ -1,4 +1,4 @@
-# sonar-l10n-zhtw
+# sonar-l10n-zh-hant
 
 A Traditional Chinese (Taiwan) language pack for SonarQube Community Build.
 
@@ -35,7 +35,7 @@ Requirements: JDK 21 and Python 3.
 ./build.sh <path-to-sonar-application.jar> <version>
 ```
 
-The jar is written to `dist/sonar-l10n-zhtwpack-<version>.jar`.
+The jar is written to `dist/sonar-l10n-zhhant-<version>.jar`.
 
 To install it, put the jar in `extensions/plugins/` and restart SonarQube. Install only one pack at a time. Other packs also define `core_zh_Hant`.
 
