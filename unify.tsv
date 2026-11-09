@@ -1,0 +1,9 @@
+# english regex	from	to
+vulnerab	弱點	漏洞
+instance	執行個體	實體
+coverage	涵蓋率	覆蓋率
+portfolio	專案組合	Portfolio
+changelog	變更記錄	變更紀錄
+severity	嚴重程度	嚴重性
+severity	嚴重度	嚴重性
+\bmeasure	量測值	度量
