@@ -18,7 +18,7 @@ map	Token	權杖	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用
 map	Pipeline	管線	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用；產品名 Bitbucket Pipelines 保留英文
 map	Plugin	外掛程式	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用
 map	Repository	儲存庫	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用
-map	Vulnerability	弱點	draft	zhtw-mcp 無規則；弱點 與 漏洞 擇一，使用者未指定，待確認
+map	Vulnerability	漏洞	user	使用者指定：TrendAI 把 Vulnerability management 翻成 漏洞管理，所以用 漏洞，不用 弱點
 map	Branch	分支	draft	zhtw-mcp 無規則；不難翻
 map	file	檔案	zhtw-mcp	例外：documentation 用 文件，需逐筆確認
 map	user	使用者	zhtw-mcp

@@ -82,9 +82,11 @@ def main() -> None:
 	parser.add_argument("name_bundle", help="for example: core")
 	parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
 	parser.add_argument("--ruleset", type=Path, help="zhtw-mcp assets/ruleset.json")
+	parser.add_argument("--en", type=Path, help="override English file, for one batch")
+	parser.add_argument("--zh", type=Path, help="override translation file, for one batch")
 	args = parser.parse_args()
-	map_en = readProps(args.root / "en" / f"{args.name_bundle}.properties")
-	map_zh = readProps(args.root / "zh" / f"{args.name_bundle}_zh_Hant.properties")
+	map_en = readProps(args.en or args.root / "en" / f"{args.name_bundle}.properties")
+	map_zh = readProps(args.zh or args.root / "zh" / f"{args.name_bundle}_zh_Hant.properties")
 	list_protected = readProtected(args.root / "protected.txt")
 	list_error = [f"unknown key: {k}" for k in map_zh if k not in map_en]
 	for key, text_zh in map_zh.items():
