@@ -13,6 +13,10 @@ from pathlib import Path
 
 PRINTF = re.compile(r"%[sd]")
 ICU_TYPES = ("select", "plural", "selectordinal")
+TAG = re.compile(
+	r"</?(?:a|b|br|code|em|i|kbd|li|link|ol|p|pre|small|span|strong|sub|sup|u|ul|div|h[1-6])"
+	r"(?:\s[^>]*)?/?>"
+)
 
 
 def readProps(path_file: Path) -> dict[str, str]:
@@ -83,6 +87,10 @@ def checkKey(key: str, text_en: str, text_zh: str, list_protected: list[str]) ->
 	list_error = []
 	if extractArgs(text_en) != extractArgs(text_zh):
 		list_error.append(f"placeholder mismatch: {key}")
+	if sorted(TAG.findall(text_en)) != sorted(TAG.findall(text_zh)):
+		list_error.append(f"html tag mismatch: {key}")
+	if text_en[len(text_en.rstrip()):] != text_zh[len(text_zh.rstrip()):]:
+		list_error.append(f"trailing whitespace differs: {key}")
 	for term in list_protected:
 		if hasTerm(term, text_en) and term not in text_zh:
 			list_error.append(f"protected term '{term}' missing: {key}")
