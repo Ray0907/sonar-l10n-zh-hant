@@ -5,8 +5,10 @@ key that does not exist in the baseline. Reports: missing and untranslated keys.
 """
 
 import argparse
+import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 PLACEHOLDER = re.compile(r"\{[^}]*\}|%[sd]")
@@ -50,10 +52,36 @@ def checkKey(key: str, text_en: str, text_zh: str, list_protected: list[str]) ->
 	return list_error
 
 
+def readForbidden(path_ruleset: Path, path_glossary: Path) -> list[tuple[str, str]]:
+	"""Unambiguous zhtw-mcp cross-strait rules, minus the terms the glossary avoids."""
+	list_avoid = [r.split("\t")[1].lower() for r in path_glossary.read_text(encoding="utf-8")
+		.splitlines() if r.startswith("avoid\t")]
+	list_rule = json.loads(path_ruleset.read_text(encoding="utf-8"))["spelling_rules"]
+	list_pair = []
+	for rule in list_rule:
+		english = rule.get("english", "").lower()
+		if (rule.get("type") != "cross_strait" or not rule.get("to") or rule.get("context_clues")
+			or len(rule["from"]) < 2 or rule["from"] in rule["to"][0]
+			or any(a in english for a in list_avoid)):
+			continue
+		list_pair.append((rule["from"], rule["to"][0]))
+	return list_pair
+
+
+def countForbidden(map_zh: dict[str, str], list_pair: list[tuple[str, str]]) -> Counter:
+	count_hit: Counter = Counter()
+	for text_zh in map_zh.values():
+		for term_from, term_to in list_pair:
+			if term_from in text_zh:
+				count_hit[f"{term_from} -> {term_to}"] += 1
+	return count_hit
+
+
 def main() -> None:
 	parser = argparse.ArgumentParser(description=__doc__)
 	parser.add_argument("name_bundle", help="for example: core")
 	parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
+	parser.add_argument("--ruleset", type=Path, help="zhtw-mcp assets/ruleset.json")
 	args = parser.parse_args()
 	map_en = readProps(args.root / "en" / f"{args.name_bundle}.properties")
 	map_zh = readProps(args.root / "zh" / f"{args.name_bundle}_zh_Hant.properties")
@@ -67,6 +95,10 @@ def main() -> None:
 	print(f"keys {len(map_en)}  translated {len(map_zh)}  missing {len(list_missing)}"
 		f"  identical-to-English {len(list_same)}  errors {len(list_error)}")
 	print("\n".join(list_error[:50]))
+	if args.ruleset:
+		count_hit = countForbidden(map_zh, readForbidden(args.ruleset, args.root / "glossary.tsv"))
+		print(f"forbidden-term lines {sum(count_hit.values())}  distinct {len(count_hit)}")
+		print("\n".join(f"{n:4d}  {t}" for t, n in count_hit.most_common(15)))
 	sys.exit(1 if list_error else 0)
 
 

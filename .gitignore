@@ -1,2 +1,4 @@
 dist/
 en/
+work/
+__pycache__/
