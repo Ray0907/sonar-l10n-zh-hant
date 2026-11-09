@@ -14,12 +14,12 @@ keep	GitHub	GitHub	zhtw-mcp case_rules	大小寫固定
 keep	GitLab	GitLab	draft	產品名稱
 keep	Bitbucket	Bitbucket	draft	產品名稱
 keep	Jenkins	Jenkins	draft	產品名稱
-decide	Token	權杖	zhtw-mcp	zhtw-mcp 建議 權杖；台灣工程師也常直接寫 Token
-decide	Pipeline	管線	zhtw-mcp	zhtw-mcp 建議 管線 或 生產線；也常直接寫 Pipeline
-decide	Plugin	外掛程式	zhtw-mcp	實務上常寫 外掛 或 Plugin
-decide	Repository	儲存庫	zhtw-mcp	實務上也常寫 Repo
-decide	Vulnerability	弱點	draft	弱點 與 漏洞 都常見，zhtw-mcp 無規則
-decide	Branch	分支	draft	也有人直接寫 Branch
+map	Token	權杖	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用
+map	Pipeline	管線	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用；產品名 Bitbucket Pipelines 保留英文
+map	Plugin	外掛程式	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用
+map	Repository	儲存庫	zhtw-mcp	依使用者規則：有 zhtw-mcp 建議就採用
+map	Vulnerability	弱點	draft	zhtw-mcp 無規則；弱點 與 漏洞 擇一，使用者未指定，待確認
+map	Branch	分支	draft	zhtw-mcp 無規則；不難翻
 map	file	檔案	zhtw-mcp	例外：documentation 用 文件，需逐筆確認
 map	user	使用者	zhtw-mcp
 map	view	檢視	zhtw-mcp
